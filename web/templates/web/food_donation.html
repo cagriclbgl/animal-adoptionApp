@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mama Bağışı</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #fff;
+        color: #333;
+        min-height: 100vh;
+      }
+
+      .form-control,
+      .form-select {
+        background-color: #fff;
+        border: 2px solid #ddd;
+        color: #333;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        background-color: #fff;
+        border-color: #ffa500;
+        box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+        color: #333;
+      }
+
+      .form-control::placeholder {
+        color: #999;
+      }
+
+      .btn-donation {
+        background-color: #ffa500;
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        padding: 12px 30px;
+        transition: all 0.3s;
+      }
+
+      .btn-donation:hover {
+        background-color: #ff8c00;
+        transform: translateY(-2px);
+        color: #fff;
+      }
+
+      .card {
+        background-color: #fff;
+        border: 2px solid #eee;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .alert-custom-error {
+        background-color: #dc3545;
+        border: 2px solid #c82333;
+        color: white;
+      }
+
+      .alert-custom-success {
+        background-color: #d4edda;
+        border: 2px solid #ffa500;
+        color: #155724;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.75rem;
+      }
+
+      .input-group-text {
+        background-color: #f8f9fa;
+        border: 2px solid #ddd;
+        border-left: none;
+        color: #ffa500;
+        font-weight: 600;
+      }
+
+      .form-select option {
+        background-color: #fff;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="card">
+            <div class="card-body p-4">
+              <div class="text-center mb-4">
+                <h1 class="h2 mb-3">
+                  <i class="bi bi-heart-fill icon-title me-2"></i>
+                  Mama Bağışı
+                </h1>
+                <p class="text-muted mb-0">
+                  Barınaktaki arkadaşlarımıza destek ol
+                </p>
+              </div>
+
+              {% if messages %} {% for message in messages %}
+              <div
+                class="alert {% if message.tags == 'success' %}alert-custom-success{% else %}alert-custom-error{% endif %} d-flex align-items-center"
+                role="alert"
+              >
+                <i
+                  class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} me-3"
+                ></i>
+                <div>{{ message }}</div>
+              </div>
+              {% endfor %} {% endif %}
+
+              <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                  <label for="city" class="form-label">
+                    <i class="bi bi-geo-alt-fill me-2"></i>Şehir Seçin
+                  </label>
+                  <select
+                    class="form-select"
+                    id="city"
+                    name="city"
+                    required
+                    onchange="filterShelters()"
+                  >
+                    <option value="">Şehir seçin...</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="shelter" class="form-label">
+                    <i class="bi bi-house-heart-fill me-2"></i>Barınak Seçin
+                  </label>
+                  <select
+                    class="form-select"
+                    id="shelter"
+                    name="shelter"
+                    required
+                    disabled
+                  >
+                    <option value="">Önce şehir seçin</option>
+                    {% for shelter in shelters %}
+                    <option
+                      value="{{ shelter.id }}"
+                      class="shelter-option"
+                      data-city="{{ shelter.city.id }}"
+                    >
+                      {{ shelter.name }} - {{ shelter.city.name }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="amount" class="form-label">
+                    <i class="bi bi-currency-exchange me-2"></i>Bağış Miktarı
+                  </label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="amount"
+                      name="amount"
+                      min="10"
+                      step="5"
+                      placeholder="Minimum 10 TL"
+                      required
+                    />
+                    <span class="input-group-text">TL</span>
+                  </div>
+                  <div class="form-text text-muted mt-2">
+                    <small>Minimum bağış miktarı 10 TL'dir</small>
+                  </div>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-donation btn-lg">
+                    <i class="bi bi-heart-fill me-2"></i>
+                    Bağış Yap
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <small class="text-muted">
+              <i class="bi bi-shield-check me-1"></i>
+              Güvenli bağış sistemi
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function filterShelters() {
+        const cityId = document.getElementById("city").value;
+        const shelterSelect = document.getElementById("shelter");
+        const allShelters = shelterSelect.querySelectorAll(".shelter-option");
+
+        // Tüm barınakları gizle
+        allShelters.forEach((opt) => {
+          opt.style.display = "none";
+        });
+
+        // Shelter select'i resetle
+        shelterSelect.selectedIndex = 0;
+
+        // Eşleşenleri göster
+        if (cityId) {
+          let hasOptions = false;
+          allShelters.forEach((opt) => {
+            if (opt.getAttribute("data-city") === cityId) {
+              opt.style.display = "block";
+              hasOptions = true;
+            }
+          });
+
+          if (hasOptions) {
+            shelterSelect.disabled = false;
+            shelterSelect.options[0].text = "Barınak seçin...";
+          } else {
+            shelterSelect.disabled = true;
+            shelterSelect.options[0].text = "Bu şehirde barınak bulunamadı";
+          }
+        } else {
+          shelterSelect.disabled = true;
+          shelterSelect.options[0].text = "Önce şehir seçin";
+        }
+      }
+
+      // Form validation feedback
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            const btn = form.querySelector('button[type="submit"]');
+            btn.innerHTML =
+              '<i class="bi bi-hourglass-split me-2"></i>İşleniyor...';
+            btn.disabled = true;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

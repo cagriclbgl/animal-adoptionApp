@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAWIT</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #ffa500;
+        flex-shrink: 0;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin: 0;
+        letter-spacing: 1px;
+        line-height: 1;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+        padding-bottom: 0.2rem;
+      }
+
+      button {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        color: #fff;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: -2px;
+      }
+
+      button:hover {
+        background-color: #333;
+      }
+
+      .hero-image {
+        flex-grow: 1;
+        background-image: url("https://www.shutterstock.com/image-photo/cat-dog-sitting-together-on-600nw-2407497473.jpg");
+        background-size: cover;
+        background-position: 110% center;
+        background-repeat: no-repeat;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-image::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>PAWIT</h1>
+      <div class="buttons">
+        <button onclick="window.location.href='{% url 'login' %}'">
+          Giriş Yap
+        </button>
+        <button onclick="window.location.href='{% url 'register' %}'">
+          Kayıt Ol
+        </button>
+      </div>
+    </header>
+
+    <div class="hero-image">
+      <!-- Alt yazılar buradan kaldırıldı -->
+    </div>
+  </body>
+</html>

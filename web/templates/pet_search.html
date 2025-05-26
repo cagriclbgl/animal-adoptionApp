@@ -1,0 +1,21 @@
+<h2>Pet Arama</h2>
+<form method="get">
+    <input type="text" name="breed" placeholder="Cins (örneğin: British Shorthair)">
+    <input type="text" name="pet_type" placeholder="Tür (kedi, köpek...)">
+    <select name="gender">
+        <option value="">Cinsiyet</option>
+        <option value="Male">Erkek</option>
+        <option value="Female">Dişi</option>
+    </select>
+    <button type="submit">Ara</button>
+</form>
+
+<a href="{% url 'export_pets_csv' %}">📤 Verileri Dışa Aktar (CSV)</a> |
+<a href="{% url 'import_pets_csv' %}">📥 Veri Yükle (CSV)</a>
+
+<hr>
+{% for pet in pets %}
+    <p><strong>{{ pet.breed }}</strong> - {{ pet.pet_type }} - {{ pet.gender }}</p>
+{% empty %}
+    <p>Sonuç bulunamadı.</p>
+{% endfor %}

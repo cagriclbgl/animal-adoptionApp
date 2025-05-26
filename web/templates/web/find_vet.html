@@ -1,0 +1,127 @@
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<style>
+  body {
+    background-color: #121212;
+    color: #f5f5f5;
+  }
+  .form-label, .form-control, .form-select {
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #333;
+  }
+  .form-control::placeholder {
+    color: #aaa;
+  }
+  .card {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    color: #f5f5f5;
+    transition: transform 0.2s ease;
+  }
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  }
+  .btn-outline-success, .btn-outline-primary {
+    border-color: #ffa500;
+    color: #ffa500;
+  }
+  .btn-outline-success:hover, .btn-outline-primary:hover {
+    background-color: #ffa500;
+    color: #000;
+  }
+  .text-warning {
+    color: #f7d038 !important;
+  }
+</style>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">🐾 Veteriner Bul</h2>
+
+  <form method="get" class="row g-3 mb-4 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label">Şehir</label>
+      <select name="city" class="form-select" onchange="this.form.submit()">
+        <option value="">Seçiniz</option>
+        {% for city in cities %}
+          <option value="{{ city.id }}" {% if city.id|stringformat:"s" == selected_city %}selected{% endif %}>{{ city.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if districts %}
+    <div class="col-md-3">
+      <label class="form-label">İlçe</label>
+      <select name="district" class="form-select" onchange="this.form.submit()">
+        <option value="">Seçiniz</option>
+        {% for district in districts %}
+          <option value="{{ district.id }}" {% if district.id|stringformat:"s" == selected_district %}selected{% endif %}>{{ district.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+
+    <div class="col-md-4">
+      <label class="form-label">Veteriner Ara</label>
+      <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Veteriner ismi" value="{{ search_query }}">
+        <button type="submit" class="btn btn-primary">Ara</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    {% for vet in vets %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ vet.name }}</h5>
+          <p class="card-text">{{ vet.address }}</p>
+          <p class="card-text" style="color: #ffc107;">
+          <small>📞 {{ vet.phone }}</small>
+        </p>
+
+          {% with vet.average_rating as avg_score %}
+            <p class="card-text mb-1">⭐ Ortalama Puan: {{ avg_score|floatformat:1 }}/5</p>
+            <p class="card-text text-warning" style="font-size: 1.2rem; letter-spacing: 2px;">
+              {% for i in "12345" %}
+                {% if forloop.counter <= vet.filled_stars %}
+                  ★
+                {% else %}
+                  ☆
+                {% endif %}
+              {% endfor %}
+            </p>
+          {% endwith %}
+
+          {% if user.is_authenticated %}
+          <form action="{% url 'rate_vet' vet.id %}" method="post">
+            {% csrf_token %}
+            <div class="input-group input-group-sm">
+              <select name="score" class="form-select">
+                {% for i in "12345" %}
+                  <option value="{{ i }}">{{ i }} yıldız</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-outline-success">Oyla</button>
+            </div>
+          </form>
+          {% else %}
+          <p class="text-muted"><small>⭐ Puan vermek için giriş yap.</small></p>
+          {% endif %}
+        </div>
+        <div class="card-footer bg-transparent text-center">
+          <button onclick="window.open('https://www.google.com/maps/search/{{ vet.address|urlencode }}', '_blank')" class="btn btn-sm btn-outline-primary">📍 Haritada Aç</button>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p class="text-muted">Veteriner bulunamadı.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>

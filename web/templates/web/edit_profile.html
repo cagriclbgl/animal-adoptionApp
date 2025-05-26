@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Düzenle</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #222;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+      }
+      h1 {
+        color: #ffa500;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color: #333;
+        color: #fff;
+      }
+      .profile-pic-container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ffa500;
+        margin-bottom: 10px;
+      }
+      .btn {
+        background-color: #ffa500;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        display: block;
+        width: 100%;
+      }
+      .btn:hover {
+        background-color: #ff8c00;
+      }
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #ffa500;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Profil Düzenle</h1>
+
+      <!-- Mesajları göster -->
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="profile-pic-container">
+          <img
+            src="{{ user.profile.image.url }}"
+            alt="Profil Resmi"
+            class="profile-pic"
+            id="profile-pic-preview"
+          />
+          <input
+            type="file"
+            name="image"
+            id="id_image"
+            accept="image/*"
+            onchange="previewImage(this)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="id_username">Kullanıcı Adı:</label>
+          {{ form.username }}
+        </div>
+
+        <div class="form-group">
+          <label for="id_email">E-posta:</label>
+          {{ form.email }}
+        </div>
+
+        <div class="form-group">
+          <label for="id_bio">Hakkımda:</label>
+          {{ form.bio }}
+        </div>
+
+        <button type="submit" class="btn">Güncelle</button>
+      </form>
+
+      <a href="{% url 'profile' %}" class="back-link">Profili Görüntüle</a>
+    </div>
+
+    <script>
+      function previewImage(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            document.getElementById("profile-pic-preview").src =
+              e.target.result;
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    </script>
+  </body>
+</html>

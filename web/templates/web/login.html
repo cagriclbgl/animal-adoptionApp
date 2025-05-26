@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAWIT - Giriş Yap</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Arka plandaki resimleri düzenleme */
+      .background-images {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+        z-index: -1;
+      }
+
+      .background-images img {
+        width: 120px; /* Küçük resim boyutu */
+        height: auto;
+        opacity: 0.3; /* Hafif şeffaflık */
+      }
+
+      /* Giriş formu tasarımı */
+      .login-container {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .login-container h2 {
+        color: #333;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button[type="submit"] {
+        background-color: #ffa500;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .errorlist {
+        color: red;
+        list-style: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Arka plandaki 6 küçük resim -->
+    <div class="background-images">
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+      <img
+        src="https://www.shutterstock.com/image-vector/silhouette-cat-dog-on-white-600nw-671156590.jpg"
+        alt="Cat Dog"
+      />
+    </div>
+
+    <!-- Giriş formu -->
+    <div class="login-container">
+      <h2>Giriş Yap</h2>
+
+      {% if form.errors %}
+      <div class="alert alert-danger">Kullanıcı adı veya şifre hatalı!</div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_username">Kullanıcı Adı</label>
+          <input type="text" name="username" id="id_username" required />
+        </div>
+        <div class="form-group">
+          <label for="id_password">Şifre</label>
+          <input type="password" name="password" id="id_password" required />
+        </div>
+        <button type="submit">Giriş Yap</button>
+      </form>
+    </div>
+  </body>
+</html>

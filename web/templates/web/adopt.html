@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sahiplen - PAWIT</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+                  url("https://images.unsplash.com/photo-1598137260722-dc446d7edb13?auto=format&fit=crop&w=1470&q=80") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .header {
+      padding: 20px 40px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffa500;
+    }
+
+    .header a {
+      text-decoration: none;
+      color: #ffa500;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin: 20px 0;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+
+    .filter-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      max-width: 1100px;
+    }
+
+    .pet-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      place-items: start center;
+    }
+
+    .pet-card {
+      background-color: #1f1f1f;
+      color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      max-width: 340px;
+      width: 100%;
+    }
+
+    .pet-card:hover {
+      transform: scale(1.02);
+    }
+
+    .pet-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .pet-info {
+      padding: 15px;
+    }
+
+    .pet-meta {
+      font-size: 0.85rem;
+      color: #bbb;
+      margin-top: 10px;
+    }
+
+    .apply-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #ffa500;
+      color: #000;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-decoration: none;
+    }
+
+    .apply-btn:hover {
+      background-color: #e69500;
+    }
+
+    .login-message {
+      margin-top: 10px;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      padding: 30px;
+      text-shadow: 0 0 4px #000;
+    }
+
+    .reset-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    label, select {
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="{% url 'home' %}">🐾 PAWIT</a>
+  </div>
+
+  <h1>Sahiplenebileceğiniz Dostlarımız</h1>
+
+  <div class="filter-section">
+    <form method="GET" class="row g-3 align-items-end">
+      <div class="col-md-3">
+        <label for="pet_type">Hayvan Türü</label>
+        <select id="pet_type" name="pet_type" class="form-select">
+          <option value="">Tümü</option>
+          <option value="dog" {% if request.GET.pet_type == 'dog' %}selected{% endif %}>Köpek</option>
+          <option value="cat" {% if request.GET.pet_type == 'cat' %}selected{% endif %}>Kedi</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="gender">Cinsiyet</label>
+        <select id="gender" name="gender" class="form-select">
+          <option value="">Tümü</option>
+          <option value="female" {% if request.GET.gender == 'female' %}selected{% endif %}>Dişi</option>
+          <option value="male" {% if request.GET.gender == 'male' %}selected{% endif %}>Erkek</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="city">Şehir</label>
+        <select id="city" name="city" class="form-select">
+          <option value="">Tümü</option>
+          <option value="istanbul" {% if request.GET.city == 'istanbul' %}selected{% endif %}>İstanbul</option>
+          <option value="ankara" {% if request.GET.city == 'ankara' %}selected{% endif %}>Ankara</option>
+          <option value="izmir" {% if request.GET.city == 'izmir' %}selected{% endif %}>İzmir</option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label for="age">Yaş</label>
+        <select id="age" name="age" class="form-select">
+          <option value="">Tümü</option>
+          <option value="0-1" {% if request.GET.age == '0-1' %}selected{% endif %}>0-1 Yaş</option>
+          <option value="1-3" {% if request.GET.age == '1-3' %}selected{% endif %}>1-3 Yaş</option>
+          <option value="3-5" {% if request.GET.age == '3-5' %}selected{% endif %}>3-5 Yaş</option>
+          <option value="5+" {% if request.GET.age == '5+' %}selected{% endif %}>5+ Yaş</option>
+        </select>
+      </div>
+
+      <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-success w-50">Filtrele</button>
+        <a href="{% url 'adopt' %}" class="reset-btn w-50">Sıfırla</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="pet-list">
+    {% for pet in pets %}
+    <div class="pet-card">
+      <img src="{{ pet.photo.url }}" alt="{{ pet.breed }}" class="pet-image" />
+      <div class="pet-info">
+        <h3>{{ pet.breed }} ({{ pet.get_pet_type_display }})</h3>
+        <p><strong>Yaş:</strong> {{ pet.age }}</p>
+        <p><strong>Cinsiyet:</strong> {{ pet.get_gender_display }}</p>
+        <p><strong>Şehir:</strong> {{ pet.city }}</p>
+        <p>{{ pet.description }}</p>
+        <p class="pet-meta">{{ pet.created_at|date:"d.m.Y" }} - {{ pet.owner.username }}</p>
+
+        {% if user.is_authenticated %}
+          {% if user != pet.owner %}
+            <a href="{% url 'apply_pet' pet.id %}" class="apply-btn">Başvuru Yap</a>
+          {% else %}
+            <button class="apply-btn" disabled>Bu ilan sizin</button>
+          {% endif %}
+        {% else %}
+          <p class="login-message">
+            Başvuru yapmak için <a href="{% url 'login' %}?next={% url 'adopt' %}" style="color: #fff; text-decoration: underline;">giriş yapın</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="no-results">
+      <p>Filtrelerinize uygun ilan bulunamadı.</p>
+      <a href="{% url 'adopt' %}" class="reset-btn">Filtreleri Sıfırla</a>
+    </div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

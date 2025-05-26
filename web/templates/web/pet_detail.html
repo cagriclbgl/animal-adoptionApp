@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ pet.breed }} - PAWIT</title>
+  </head>
+  <body>
+    <h1>{{ pet.breed }} ({{ pet.get_pet_type_display }})</h1>
+    <img
+      src="{{ pet.photo.url }}"
+      alt="{{ pet.breed }}"
+      style="max-width: 300px"
+    />
+    <p><strong>Yaş:</strong> {{ pet.age }}</p>
+    <p><strong>Cinsiyet:</strong> {{ pet.get_gender_display }}</p>
+    <p><strong>Şehir:</strong> {{ pet.city }}</p>
+    <p><strong>Açıklama:</strong> {{ pet.description }}</p>
+    <p><strong>Sahibi:</strong> {{ pet.owner.username }}</p>
+
+    {% if user.is_authenticated and user != pet.owner %}
+    <a href="{% url 'apply_pet' pet.id %}" class="btn btn-primary"
+      >Başvuru Yap</a
+    >
+    {% elif user == pet.owner %}
+    <p>Bu ilan size ait</p>
+    {% else %}
+    <p>
+      Başvuru yapmak için <a href="{% url 'login' %}">giriş yapmalısınız</a>
+    </p>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,7 @@
+
+<h2>Pet CSV Dosyası Yükle</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="csv_file" accept=".csv">
+    <button type="submit">Yükle</button>
+</form>

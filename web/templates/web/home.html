@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAWIT | Evcil Hayvan Dünyası</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #ff6b35; /* Turuncu tonu */
+        --secondary: #004e89; /* Mavi tonu */
+        --dark: #1a1a1d; /* Koyu gri/siyah */
+        --light: #f7f7ff; /* Açık beyaz */
+        --glass: rgba(255, 255, 255, 0.08); /* Hafif şeffaf beyaz */
+      }
+
+      body {
+        font-family: "Poppins", sans-serif; /* Daha modern bir font */
+        background: linear-gradient(135deg, var(--dark) 0%, #2a2a32 100%);
+        color: var(--light);
+        min-height: 100vh;
+        overflow-x: hidden; /* Yatay kaydırmayı engelle */
+        display: flex;
+        flex-direction: column; /* Sayfa içeriğini dikeyde sırala */
+      }
+
+      /* Navbar Stilleri */
+      .navbar-custom {
+        background-color: #000;
+        border-bottom: 3px solid #ffa500;
+        padding: 1rem 0; /* Daha az padding */
+      }
+
+      .navbar-brand {
+        font-size: 2.5rem; /* Biraz küçüldü */
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #fff !important;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .navbar-brand:hover {
+        color: #ffa500 !important;
+      }
+
+      .btn-custom {
+        background-color: transparent;
+        border: 2px solid #ffa500;
+        color: #fff;
+        padding: 0.5rem 1.2rem; /* Daha az padding */
+        margin: 0 0.25rem;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-custom:hover {
+        background-color: #ffa500;
+        color: #000;
+        transform: translateY(-2px);
+      }
+
+      .btn-logout {
+        background-color: #dc3545;
+        border: 2px solid #dc3545;
+        color: #fff;
+      }
+
+      .btn-logout:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+        color: #fff;
+      }
+
+      /* Hero Section (Video yerine resim arkaplanı ve içerik) */
+      .hero-section {
+        flex-grow: 1; /* Kalan alanı kapla */
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)
+          ),
+          url("https://www.shutterstock.com/image-photo/cat-dog-sitting-together-on-600nw-2407497473.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 0; /* İç padding */
+      }
+
+      .hero-content {
+        text-align: center;
+        z-index: 2;
+        max-width: 1200px;
+        padding: 0 1rem; /* Yanlardan padding */
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      }
+
+      .hero-subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 3rem;
+        color: #f8f9fa;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      }
+
+      /* Pet Icons in Hero */
+      .pet-icons {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .pet-icon {
+        font-size: 4rem;
+        color: #ffa500;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .pet-icon.cat {
+        animation-delay: 0.3s;
+      }
+
+      .pet-icon.dog {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* Aksiyon Kartları */
+      .action-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1000px; /* Genişliği sınırlayın */
+        margin: 0 auto; /* Ortala */
+      }
+
+      .action-card {
+        background: rgba(255, 255, 255, 0.1); /* Hafif şeffaf */
+        backdrop-filter: blur(10px); /* Bulanıklık efekti */
+        border: 2px solid rgba(255, 165, 0, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: #fff;
+        display: flex; /* İçeriği ortalamak için flexbox */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .action-card:hover {
+        background: rgba(255, 165, 0, 0.2);
+        border-color: #ffa500;
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .action-card i {
+        font-size: 3rem;
+        color: #ffa500;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .action-card h5 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .action-card p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+      }
+
+      /* Responsive Düzenlemeler */
+      @media (max-width: 992px) {
+        .navbar-brand {
+          font-size: 2rem;
+        }
+        .hero-title {
+          font-size: 3rem;
+        }
+        .pet-icon {
+          font-size: 3.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar-brand {
+          font-size: 1.8rem;
+          margin-bottom: 0.5rem;
+        }
+        .navbar-custom .container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .d-flex.align-items-center {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .btn-custom,
+        .btn-logout {
+          margin: 0.5rem 0 !important;
+          width: 100%; /* Mobil görünümde butonları tam genişlik yap */
+        }
+        .hero-title {
+          font-size: 2.2rem;
+        }
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+        .pet-icons {
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+        .pet-icon {
+          font-size: 3rem;
+        }
+        .action-cards {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <div class="container">
+        <a href="{% url 'home' %}" class="navbar-brand">
+          <i class="fas fa-paw me-2" style="color: #ffa500"></i>PAWIT
+        </a>
+
+        <div class="d-flex align-items-center flex-wrap justify-content-center">
+          {% if user.is_authenticated %}
+          <button
+            class="btn btn-custom me-lg-2 mb-2 mb-lg-0"
+            onclick="window.location.href='{% url 'profile' %}'"
+          >
+            <i class="bi bi-person-gear me-1"></i>Profil
+          </button>
+
+          <form method="POST" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-logout">
+              <i class="bi bi-box-arrow-right me-1"></i>Çıkış
+            </button>
+          </form>
+          {% else %}
+          <button
+            class="btn btn-custom me-2 mb-2 mb-lg-0"
+            onclick="window.location.href='{% url 'login' %}'"
+          >
+            <i class="bi bi-box-arrow-in-right me-1"></i>Giriş Yap
+          </button>
+          <button
+            class="btn btn-custom"
+            onclick="window.location.href='{% url 'register' %}'"
+          >
+            <i class="bi bi-person-plus me-1"></i>Kayıt Ol
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title animate__animated animate__fadeInDown">
+          Evcil Hayvan Platformu
+        </h1>
+
+        <div class="pet-icons animate__animated animate__fadeIn">
+          <i class="bi bi-cat pet-icon cat"></i>
+          <i class="bi bi-dog pet-icon dog"></i>
+        </div>
+
+        <p
+          class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s"
+        ></p>
+
+        <div class="action-cards animate__animated animate__fadeInUp animate__delay-2s">
+  <a href="{% url 'cat-breeds' %}" class="action-card">
+    <i class="fa-solid fa-cat"></i>
+    <h5>Kedi Cinsleri</h5>
+    <p>Kedi cinslerini keşfet ve özelliklerini öğren</p>
+  </a>
+
+  <a href="{% url 'dog-breeds' %}" class="action-card">
+    <i class="fa-solid fa-dog"></i>
+    <h5>Köpek Cinsleri</h5>
+    <p>Köpek cinslerini keşfet ve özelliklerini öğren</p>
+  </a>
+
+  <a href="{% url 'food-donation' %}" class="action-card">
+    <i class="bi bi-heart-fill"></i>
+    <h5>Mama Bağışı</h5>
+    <p>Sokak hayvanları için mama bağışında bulun</p>
+  </a>
+
+  <a href="{% url 'adopt' %}" class="action-card">
+    <i class="bi bi-gift-fill"></i>
+    <h5>Sahiplen</h5>
+    <p>Yeni bir aile üyesi edin, hayat kurtarın</p>
+  </a>
+
+  <a href="{% url 'give-for-adoption' %}" class="action-card">
+    <i class="bi bi-house-heart"></i>
+    <h5>Sahiplendir</h5>
+    <p>Dostunuz için yeni bir yuva bulun</p>
+  </a>
+
+  <a href="{% url 'find-vet' %}" class="action-card">
+    <i class="bi bi-hospital"></i>
+    <h5>Veteriner Bul</h5>
+    <p>Yakınınızdaki veteriner hekim bulun</p>
+  </a>
+
+  {% if user.is_authenticated and user.is_superuser %}
+    <a href="{% url 'pet_dashboard' %}" class="action-card">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <h5>Pet Yönetim Paneli</h5>
+      <p>Veri iç/dışa aktarma ve pet arama işlemleri</p>
+    </a>
+  {% endif %}
+</div>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

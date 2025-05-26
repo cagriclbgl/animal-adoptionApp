@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAWIT - Kedi Cinsleri</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #fff;
+      padding-bottom: 15px;
+    }
+
+    .cat-icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    .cat-breed {
+      background-color: rgba(30, 30, 30, 0.8);
+      border: 1px solid #333;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      transition: all 0.3s;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .cat-breed:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+      cursor: pointer;
+    }
+
+    .cat-breed h3 {
+      color: #fff;
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+    }
+
+    .cat-breed p {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header d-flex justify-content-center align-items-center gap-3">
+      <img src="{% static 'web/images/kopek.jpg' %}" alt="Kedi" class="cat-icon" />
+      <h1>KÖPEK CİNSLERİ</h1>
+      <img src="{% static 'web/images/kopek.jpg' %}" alt="Kedi" class="cat-icon" />
+    </div>
+
+    <div class="row">
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Beagle',
+         'Meraklı ve enerjik',
+         'Beagle, hareketli, oyuncu ve koku alma yeteneği yüksek bir ırktır. Aile ortamına çok uygundur.',
+         '/media/pet_photos/beagle.jpg')"
+       style="background-image: url('/media/pet_photos/beagle.jpg');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Beagle</h3>
+      <p>Meraklı ve enerjik</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Bulldog',
+         'Sakin ve cesur',
+         'Bulldog, sevecen yapısı ve kararlı tavırlarıyla tanınan, düşük enerjili ama sadık bir köpektir.',
+         '/media/pet_photos/bulldog.webp')"
+       style="background-image: url('/media/pet_photos/bulldog.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Bulldog</h3>
+      <p>Sakin ve cesur</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Dachshund',
+         'Cesur ve oyuncu',
+         'Dachshund, uzun gövdesi ve kısa bacaklarıyla bilinen, oldukça hareketli ve meraklı bir köpek cinsidir.',
+         '/media/pet_photos/daschund.webp')"
+       style="background-image: url('/media/pet_photos/daschund.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Dachshund</h3>
+      <p>Cesur ve oyuncu</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'German Shepherd',
+         'Zeki ve koruyucu',
+         'German Shepherd, çok yönlü, eğitim almayı seven ve koruma içgüdüsü güçlü bir köpek cinsidir.',
+         '/media/pet_photos/german.webp')"
+       style="background-image: url('/media/pet_photos/german.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>German Shepherd</h3>
+      <p>Zeki ve koruyucu</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Golden Retriever',
+         'Sadık ve dost canlısı',
+         'Golden Retriever, uysal doğası, sosyal yapısı ve eğitilebilirliğiyle bilinen çok popüler bir aile köpeğidir.',
+         '/media/pet_photos/golden.png')"
+       style="background-image: url('/media/pet_photos/golden.png');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Golden Retriever</h3>
+      <p>Sadık ve dost canlısı</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Labrador',
+         'Enerjik ve sevecen',
+         'Labrador Retriever, yüksek enerjili, oyuncu ve sadık bir köpek cinsidir. Özellikle çocuklarla arası çok iyidir.',
+         '/media/pet_photos/labrador.webp')"
+       style="background-image: url('/media/pet_photos/labrador.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Labrador</h3>
+      <p>Enerjik ve sevecen</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Poodle',
+         'Zeki ve tüy dökmez',
+         'Poodle, alerjisi olanlar için uygun, çok zeki ve kolay eğitilebilen bir köpektir.',
+         '/media/pet_photos/poodle.webp')"
+       style="background-image: url('/media/pet_photos/poodle.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Poodle</h3>
+      <p>Zeki ve tüy dökmez</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Rotweiler',
+         'Güçlü ve kararlı',
+         'Rottweiler, koruma içgüdüsü yüksek, iyi eğitildiğinde sadık ve güvenilir bir dosttur.',
+         '/media/pet_photos/rott.webp')"
+       style="background-image: url('/media/pet_photos/rott.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Rotweiler</h3>
+      <p>Güçlü ve kararlı</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="cat-breed"
+       onclick="showDetails(
+         'Siberian Husky',
+         'Soğuk iklim köpeği',
+         'Siberian Husky, enerjik, özgür ruhlu ve yoğun tüy yapısıyla soğuk havalarda çok dayanıklıdır.',
+         '/media/pet_photos/siberianhusky.webp')"
+       style="background-image: url('/media/pet_photos/siberianhusky.webp');">
+    <div class="bg-dark bg-opacity-50 p-2 rounded w-100">
+      <h3>Siberian Husky</h3>
+      <p>Soğuk iklim köpeği</p>
+    </div>
+  </div>
+</div>
+</div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="catModal" tabindex="-1" aria-labelledby="catModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-white" id="catModalContent"
+         style="background-size: cover; background-position: center;">
+
+      <div class="modal-header bg-dark bg-opacity-75">
+        <h5 class="modal-title" id="catModalLabel">Köpek Cinsi</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+
+      <div class="modal-body bg-dark bg-opacity-50 text-center">
+        <img id="catModalImage" src="" alt="Köpek Görseli" class="img-fluid rounded mb-3" style="max-height: 300px;">
+        <p id="catModalDesc">Açıklama burada olacak.</p>
+      </div>
+
+      <div class="modal-footer bg-dark bg-opacity-75">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function showDetails(title, shortDesc, longDesc, imageUrl = null) {
+    document.getElementById("catModalLabel").innerText = title;
+    document.getElementById("catModalDesc").innerText = longDesc;
+
+    if (imageUrl) {
+      document.getElementById("catModalContent").style.backgroundImage = `url('${imageUrl}')`;
+      document.getElementById("catModalImage").src = imageUrl;
+      document.getElementById("catModalImage").style.display = "block";
+    } else {
+      document.getElementById("catModalContent").style.backgroundImage = 'none';
+      document.getElementById("catModalImage").style.display = "none";
+    }
+
+    const myModal = new bootstrap.Modal(document.getElementById('catModal'));
+    myModal.show();
+  }
+</script>
+</body>
+</html>
