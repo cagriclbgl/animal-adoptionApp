@@ -158,6 +158,16 @@ def rate_vet(request, vet_id):
             defaults={'score': score}
         )
         return redirect('find-vet')  # Geri listeye döner
+
+    @login_required
+    def delete_account(request):
+        if request.method == 'POST':
+            user = request.user
+            logout(request)
+            user.delete()
+            return redirect('home')
+        return redirect('profile')
+
     
 def login_view(request):
     if request.method == 'POST':
@@ -170,16 +180,19 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'web/login.html', {'form': form})
 
+from .forms import CustomUserCreationForm
+
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Kayıt olurken otomatik giriş yap
-            return redirect('home')  # Kayıt başarılıysa ana sayfaya yönlendir
+            login(request, user)
+            return redirect('home')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'web/register.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)

@@ -20,5 +20,7 @@ urlpatterns = [
     path('application/<int:application_id>/reject/', views.reject_application, name='reject_application'),
     path('application/delete/<int:pk>/', views.pet_delete, name='pet_delete'),
     path('rate-vet/<int:vet_id>/', views.rate_vet, name='rate_vet'),
+    
+
 
 ]

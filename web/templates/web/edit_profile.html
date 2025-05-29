@@ -65,9 +65,28 @@
         font-weight: bold;
         display: block;
         width: 100%;
+        margin-bottom: 10px;
       }
       .btn:hover {
         background-color: #ff8c00;
+      }
+      .btn-outline {
+        background-color: transparent;
+        border: 2px solid #ffa500;
+        color: #ffa500;
+        margin-bottom: 10px;
+      }
+      .btn-outline:hover {
+        background-color: #ffa500;
+        color: #000;
+      }
+      .btn-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+      }
+      .btn-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
       }
       .back-link {
         display: block;
@@ -82,7 +101,6 @@
     <div class="container">
       <h1>Profil Düzenle</h1>
 
-      <!-- Mesajları göster -->
       {% if messages %}
       <div class="messages">
         {% for message in messages %}
@@ -111,21 +129,36 @@
         </div>
 
         <div class="form-group">
-          <label for="id_username">Kullanıcı Adı:</label>
+          {{ form.username.label_tag }}
           {{ form.username }}
         </div>
 
         <div class="form-group">
-          <label for="id_email">E-posta:</label>
+          {{ form.email.label_tag }}
           {{ form.email }}
         </div>
 
         <div class="form-group">
-          <label for="id_bio">Hakkımda:</label>
-          {{ form.bio }}
+          {{ profile_form.bio.label_tag }}
+          {{ profile_form.bio }}
         </div>
 
         <button type="submit" class="btn">Güncelle</button>
+      </form>
+
+      <hr />
+
+      <!-- Şifre Değiştir -->
+      <a href="{% url 'password_change' %}" class="btn btn-outline">
+        🔐 Şifreyi Değiştir
+      </a>
+
+      <!-- Hesap Sil -->
+      <form method="post" action="{% url 'delete_account' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline btn-danger">
+          🗑️ Hesabı Kalıcı Olarak Sil
+        </button>
       </form>
 
       <a href="{% url 'profile' %}" class="back-link">Profili Görüntüle</a>
@@ -135,12 +168,9 @@
       function previewImage(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
-
           reader.onload = function (e) {
-            document.getElementById("profile-pic-preview").src =
-              e.target.result;
+            document.getElementById("profile-pic-preview").src = e.target.result;
           };
-
           reader.readAsDataURL(input.files[0]);
         }
       }
